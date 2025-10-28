@@ -48,6 +48,7 @@ typedef struct tagList{
 // Bien toan cuc
 struct qlxemay *a; // Cau truc quan ly xe may
 int n; // So luong xe may
+int n2; // So luong xe may phan stack va queue
 List l; // Danh sach node
 Stack stack; // Stack
 Queue queue; // Queue
@@ -140,7 +141,6 @@ struct qlxemay ds[] = {
 {"843XL5567","Honda","Le Thi Quy","10/08/2025","Da sua chua"},
 {"63XL33445","Suzuki","Pham Van Vuong","01/08/2025","Dang sua chua"},
 {"83XL36545","Honda","Pham Van Ong","09/08/2025","Chua sua chua"}
-
 };
 memcpy(a, ds, n * sizeof(struct qlxemay));
 }
@@ -197,26 +197,25 @@ switch(stt){
 //Ham menu phan cau truc
 void menucautruc(){
 int stt;
-printf("-----PHAN CAU TRUC-----\n");
+printf("\n-----PHAN CAU TRUC-----\n");
 printf("1. In danh sach\n");
 printf("2. Them moi xe\n");
 printf("3. Sua thong tin xe\n");
 printf("4. Xoa thong tin xe\n");
 printf("5. Tim kiem thong tin xe\n");
 printf("6. Sap xep thong tin xe\n");
-printf("7. Thoat\n");
+printf("7. Quay lai\n");
 printf("-------------------------------------\n");
 do{
     printf("Nhap lua chon trong danh sach: ");
     scanf("%d",&stt);
     getchar();
     if(stt == 0 || stt > 7){
-        printf("Nhap sai, vui long nhap tu 1 den 7\n");
+        printf("Nhap sai, vui long nhap tu 1 den 8\n");
     }
 } while (stt == 0 || stt > 7);
 switch(stt){
     case 1:
-    printf("In danh sach\n");
     inthongtin(a, n);
     menucautruc();
     break;
@@ -241,6 +240,7 @@ switch(stt){
     menucautruc();
     break;
     case 7:
+    menu();
     break;
 }
 }
@@ -267,8 +267,7 @@ void themmoixe() {
         gets(a[n].tinhtrang);
         n++;
     }
-    printf("\nDa them %d xe moi thanh cong!\n", sl);
-    inthongtin(a, n);
+    printf("\nDA THEM %d XE MOI THANH CONG!\n", sl);
 }
 
 // Ham tim vi tri
@@ -319,8 +318,8 @@ void xoaxe(){
         }
         n = n - check;
         if(check){
-            printf("Xoa thanh cong!\n");
-        } else printf("Khong tim thay xe de xoa!\n");
+            printf("XOA THANH CONG!\n");
+        } else printf("KHONG TIM THAY XE DE XOA!\n");
     }
 
 // Ham sua thong tin xe
@@ -378,10 +377,10 @@ char giatri[50];
                 check = 1;
                 break;
         }
-        if(check == 1) printf("Chinh sua thanh cong!\n");
-        else printf("Chinh sua that bai!\n");
+        if(check == 1) printf("CHINH SUA THANH CONG!\n");
+        else printf("CHINH SUA THAT BAI!\n");
     } else {
-        printf("Khong tim thay xe voi thong tin nay!\n");
+        printf("KHONG TIM THAY XE VOI THONG TIN NAY!\n");
     }
 }
 
@@ -413,8 +412,8 @@ char giatri[50];
         in1tt(a[vitri]);
     }
     }
-    if(vitri != -1) printf("Da tim thay tat ca xe!\n");
-    else printf("Khong tim thay xe!\n");
+    if(vitri != -1) printf("DA TIM THAY TAT CA XE!\n");
+    else printf("KHONG TIM THAY XE!\n");
 }
 
 // Ham sap xep xe
@@ -469,11 +468,10 @@ void sapxepxe(){
     }
 }
     else if(loai == 4){
-        quicksort(a, 0, n);
+        quicksort(a, 0, n - 1);
     }
     else  if(loai == 5) menucautruc();
-    printf("\nDa sap xep xong!\n");
-    inthongtin(a, n);
+    printf("\n DA SAP XEP XONG!\n");
 }
 
 // Quicksort
@@ -501,14 +499,14 @@ void quicksort(struct qlxemay *a, int left, int right) {
 // Menu danh sach
 void menudanhsach(){
 int stt;
-printf("-----PHAN DANH SACH-----\n");
+printf("\n-----PHAN DANH SACH-----\n");
 printf("1. In danh sach node\n");
 printf("2. Them moi xe\n");
 printf("3. Sua thong tin xe\n");
 printf("4. Xoa thong tin xe\n");
 printf("5. Tim kiem thong tin xe\n");
 printf("6. Sap xep thong tin xe\n");
-printf("7. Thoat\n");
+printf("7. Quay lai\n");
 printf("-------------------------------------\n");
 printf("Nhap lua chon trong danh sach: ");
 scanf("%d", &stt);
@@ -541,6 +539,8 @@ switch(stt){
     sapxepnodexe();
     menudanhsach();
     break;
+    case 7:
+    menu();
 }
 }
 // Ham tao danh sach null
@@ -597,8 +597,8 @@ void addNodeSauX(char x[], Node *newnode){
         if(p == l.pTail){
             l.pTail = newnode;
         }
-        printf("Them thanh cong\n");
-    } else printf("Khong tim thay!\n");
+        printf("THEM THANH CONG!\n");
+    } else printf("KHONG TIM THAY!\n");
 }
 
 // Them node vao vi tri k trong danh sach
@@ -608,7 +608,7 @@ void addNodeK(int k, Node *newnode){
     int vitri = 1;
     if(k == vitri){
         addHead(newnode);
-        printf("Them thanh cong!\n");
+        printf("THEM THANH CONG!\n");
     } else {
         while(p != NULL && vitri != k){
             q = p;
@@ -618,7 +618,7 @@ void addNodeK(int k, Node *newnode){
         if(p != NULL){
             newnode->next = p;
             q->next = newnode;
-            printf("Them thanh cong!\n");
+            printf("THEM THANH CONG!\n");
         }
     }
 }
@@ -675,7 +675,7 @@ void timKiemNode(){
             a = a->next;
         }
         if(!found){
-        printf("Khong tim thay xe");
+        printf("KHONG TIM THAY XE");
         }
         break;
         }
@@ -694,7 +694,7 @@ void timKiemNode(){
             b = b->next;
         }
         if(!found){
-            printf("Khong tim thay xe");
+            printf("KHONG TIM THAY XE");
         }
         break;
         }
@@ -713,7 +713,7 @@ void timKiemNode(){
             c = c->next;
         }
         if(!found){
-            printf("Khong tim thay xe");
+            printf("KHONG TIM THAY XE");
         }
         break;
         }
@@ -732,7 +732,7 @@ void timKiemNode(){
             d = d->next;
         }
         if(!found){
-            printf("Khong tim thay xe");
+            printf("KHONG TIM THAY XE");
         }
         break;
         }
@@ -751,7 +751,7 @@ void timKiemNode(){
                 e = e->next;
         }
         if(!found){
-            printf("Khong tim thay xe");
+            printf("KHONG TIM THAY XE");
         }
         break;
     }
@@ -770,7 +770,7 @@ void deleteNodeHead(){
             l.pTail = NULL;
         }
         delete p;
-        printf("\nXoa xe dau danh sach thanh cong!\n");
+        printf("\nXOA XE DAU DANH SACH THANH CONG!\n");
     }
 }
 
@@ -805,11 +805,11 @@ void createNewNode(){
     switch(vitri){
         case 1:
             addHead(createNode(b));
-            printf("Da them xe thanh cong!\n");
+            printf("DA THEM XE THANH CONG!\n");
             break;
         case 2:
             addTail(createNode(b));
-            printf("Da them xe thanh cong!\n");
+            printf("DA THEM XE THANH CONG!\n");
             break;
         case 3:
             printf("Nhap vi tri x can them: ");
@@ -885,8 +885,8 @@ switch(option){
                 }
             }
             if(check){
-                printf("Xoa thanh cong!\n");
-            } else printf("Xoa that bai!\n");
+                printf("XOA THANH CONG!\n");
+            } else printf("XOA THAT BAI!\n");
             break;
         }
         case 2:{
@@ -917,8 +917,8 @@ switch(option){
                 }
             }
             if(check){
-                printf("Xoa thanh cong!\n");
-            } else printf("Xoa that bai!\n");
+                printf("XOA THANH CONG!\n");
+            } else printf("XOA THAT BAI!\n");
             break;
         }
             case 3:{
@@ -949,8 +949,8 @@ switch(option){
                 }
             }
             if(check){
-                printf("Xoa thanh cong!\n");
-            } else printf("Xoa that bai!\n");
+                printf("XOA THANH CONG!\n");
+            } else printf("XOA THAT BAI!\n");
             break;
             }
             case 4:{
@@ -981,8 +981,8 @@ switch(option){
                 }
             }
             if(check){
-                printf("Xoa thanh cong!\n");
-            } else printf("Xoa that bai!\n");
+                printf("XOA THANH CONG!\n");
+            } else printf("XOA THAT BAI!\n");
             break;
             }
             case 5:{
@@ -1013,8 +1013,8 @@ switch(option){
                 }
             }
             if(check){
-                printf("Xoa thanh cong!\n");
-            } else printf("Xoa that bai!\n");
+                printf("XOA THANH CONG!\n");
+            } else printf("XOA THAT BAI!\n");
             break;
             }
             case 6:
@@ -1033,7 +1033,7 @@ switch(option){
             printf("Thong tin xe se bi xoa: \n %-12s | %-10s | %-20s | %-12s | %-15s\n", p->biensoxe, p->tenchuxe, p->hangxe, p->ngayguixe, p->tinhtrang);
             l.pHead = p->next;
             delete p;
-            printf("Xoa thanh cong!\n");
+            printf("XOA THANH CONG!\n");
         } else {
             while(p != NULL && vitri != q){
                 vitri++;
@@ -1044,8 +1044,8 @@ switch(option){
                 printf("Thong tin xe se bi xoa: \n %-12s | %-10s | %-20s | %-12s | %-15s\n", p->biensoxe, p->tenchuxe, p->hangxe, p->ngayguixe, p->tinhtrang);
                 x->next = p->next;
                 delete p;
-                printf("Xoa thanh cong!\n");
-            } else printf("Khong tim thay vi tri can xoa trong danh sach!\n");
+                printf("XOA THANH CONG!\n");
+            } else printf("KHONG TIM THAY VI TRI XE CAN XOA TRONG DANH SACH!\n");
         }
         break;
     }
@@ -1088,27 +1088,27 @@ void chinhsuaxe(){
                 case 1:
                     printf("Nhap bien so xe: ");
                     gets(a->biensoxe);
-                    printf("Chinh sua thanh cong!\n");
+                    printf("CHINH SUA THANH CONG!\n");
                     break;
                 case 2:
                     printf("Nhap ten chu xe: ");
                     gets(a->tenchuxe);
-                    printf("Chinh sua thanh cong!\n");
+                    printf("CHINH SUA THANH CONG!\n");
                     break;
                 case 3:
                     printf("Nhap ten hang xe: ");
                     gets(a->hangxe);
-                    printf("Chinh sua thanh cong!\n");
+                    printf("CHINH SUA THANH CONG!\n");
                     break;
                 case 4:
                     printf("Nhap ngay gui xe: ");
                     gets(a->ngayguixe);
-                    printf("Chinh sua thanh cong!\n");
+                    printf("CHINH SUA THANH CONG!\n");
                     break;
                 case 5:
                     printf("Nhap tinh trang xe: ");
                     gets(a->tinhtrang);
-                    printf("Chinh sua thanh cong!\n");
+                    printf("CHINH SUA THANH CONG!\n");
                     break;
                 case 6:
                     printf("Nhap bien so xe: ");
@@ -1121,7 +1121,7 @@ void chinhsuaxe(){
                     gets(a->ngayguixe);
                     printf("Nhap tinh trang xe: ");
                     gets(a->tinhtrang);
-                    printf("Chinh sua thanh cong!\n");
+                    printf("CHINH SUA THANH CONG!\n");
                     break;
             }
         }
@@ -1142,11 +1142,11 @@ void sapxepnodexe(){
     switch(option){
     case 1:
         selectionNode();
-        printf("Sap xep thanh cong!\n");
+        printf("SAP XEP THANH CONG!\n");
         break;
     case 2:
         selectionNode2();
-        printf("Sap xep thanh cong!\n");
+        printf("SAP XEP THANH CONG!\n");
         break;
     case 3:
         menudanhsach();
@@ -1241,7 +1241,7 @@ void selectionNode2() {
 
 void phanStack(){
 
-n = 30;
+n2 = 30;
 int m = 20;
 
 stack.array = new struct qlxemay[n];
@@ -1355,7 +1355,7 @@ void pop(){
 }
 
 void phanQueue(){
-n = 30;
+n2 = 30;
 int m = 20;
 
 queue.array = new struct qlxemay[n];

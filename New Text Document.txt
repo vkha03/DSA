@@ -1,3 +1,0 @@
-in các phần tử trong stack
-thêm phần tử vào stack
-lấy phần tử ra khỏi stack và in phần tử đó ra
